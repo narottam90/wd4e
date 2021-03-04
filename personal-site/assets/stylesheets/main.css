@@ -1,0 +1,97 @@
+/* Styling */
+
+
+h1 {
+    color: #2e484c;
+    font-family: "Julius Sans One", sans-serif;
+    font-size: 1.8em;
+    font-weight: normal;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+}
+
+/* Header and footer styling */
+
+header, footer {
+    background: rgb(245, 134, 134);
+    background: -moz-linear-gradient(top, rgb(245, 134, 134) 0%, #FFFFFF 100%);
+    background: -webkit-linear-gradient(top, rgb(245, 134, 134) 0%, #FFFFFF 100%);
+    background: -o-linear-gradient(top, rgb(245, 134, 134) 0%, #FFFFFF 100%);
+    background: linear-gradient(top, rgb(245, 134, 134) 0%, #FFFFFF 100%);
+
+}
+
+/* Nav bar link styling */
+
+nav a {
+    background-color: cornflowerblue;
+    color: #FFFFFF;
+    width: 22%;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Text and body styling */
+
+.half {
+    width: 45%;
+    margin-right: 2%;
+    display: inline-block;
+    float: left;
+}
+
+.whole {
+    clear: both;
+}
+
+h2 {
+    color: #2e484c;
+    background-color: rgb(149, 223, 223);
+    font-family: "Julius Sans One", sans-serif;
+    font-size: 1em;
+    font-weight: normal;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+
+body {
+    font-family: "Libre Baskerville", sans-serif;
+    margin: 15px;
+    padding: 10px;
+}
+
+header {
+    text-align: center;
+    margin: 4px;
+    background-color:rgb(245, 134, 134);
+    padding: 10px;
+    border: 1px solid #2e484c;
+    border-radius: 10px;
+}
+
+li{
+    list-style-type: square;
+    list-style-position: inside;
+}
+
+
+/* Horizontal lines */
+
+hr {
+    clear: both;
+}
+
+/* Additional footer styling */
+
+footer {
+    clear: both;
+    text-align: center;
+    margin: 4px;
+    border: 1px solid #2e484c;
+    border-radius: 10px;
+}
+
+img {
+    width: 75px;
+}

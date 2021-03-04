@@ -1,0 +1,94 @@
+body {
+    padding: 5px;
+    margin: 5px;
+}
+
+main {
+    display: inline-block;
+}
+
+/* Unable to get the local images to work */
+
+header {
+    background-image: url("http://intro-webdesign.com/CSS/assignment-2/images/flywheel.jpg");
+    background-color: rgb(138, 43, 226);
+}
+
+nav > a {
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 10px 40px;
+    margin: 5px;
+    display: inline-block;
+    text-decoration: none;
+    background-color: rgba(233, 233, 233, 0.466);
+}
+
+nav {
+    margin: 0 auto;
+    text-align: center;
+}
+
+a {
+    text-align: center;
+}
+
+img {
+    border: 1px solid black;
+    width: 150px;
+    height: 100px;
+    margin: 20px auto;
+    display: block;
+}
+
+
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+.active {
+    background-color: rgb(255, 255, 255);
+    color: black;
+}
+
+.left {
+    float: left;
+}
+
+aside {
+    padding: 30px;
+    margin: 0 20px 0 0;
+    background-color: brown;
+}
+
+p {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+li {
+    list-style-type: disc;
+    list-style-position: inside;
+}
