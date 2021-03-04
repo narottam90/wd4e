@@ -97,50 +97,57 @@ li {
 
 table {
     width: 75%;
-    margin: 0 auto;
     border-spacing: 0;
+    margin: 0 auto;
 }
 
 /* Style the table header */
 
 tr > th {
-    background-color: black;
+    font-family: "Crimson Text", serif;
+    background: linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114));
     color: white;
-    border: 2px red solid;
-    padding: 1%;
+    padding: 2%;
+    margin: 2%;
+    border: 2px white solid;
+    border-bottom: 4px #000000 solid;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
-/* Round the top two corners of the table header */
+/* Left align the text in the first column */
 
-tr > th:first-child{
-    border-top-left-radius: 25px;
-}
-
-tr > th:last-child{
-    border-top-right-radius: 25px;
-}
-
-/* Center align the text in the first column */
-
-tr > td:first-child {
+tr > td:first-child, tr >th:first-child {
     text-align: left;
 }
 
-tr > nth
+/* Center align every column (1n) starting from the 2nd column */
 
-td {
-    padding: 1%;
-    border: 2px white solid;
-    background-color: yellowgreen;
-    opacity: 0.8;
+tr > td:nth-child(1n + 2) {
+    text-align: center;
 }
 
-tr>td {
-    opacity: 0.8;
+/* Set opacity of the rows to 0.8 and 1 on row hover */
+tr > td {
+    opacity: .8;
+    transition: opacity .8s;
 }
 
 tr:hover > td {
     opacity: 1;
 }
 
+/* Style the table data elements */
 
+td {
+    font-family: "Work Sans", serif;
+    background-color: lightseagreen;
+    padding: 1%;
+    margin: 1%;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    border: 2px solid white;
+}
