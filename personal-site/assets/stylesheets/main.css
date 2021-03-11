@@ -225,6 +225,13 @@ h1, h3, h4, h5, p {
   color: #a9b2b9;
 }
 
+.teaser img {
+  border-radius: 5px;
+  display: block;
+  margin-bottom: 22px;
+  max-width: 100%;
+}
+
 /* 
   ========================================
   Primary Header
@@ -314,4 +321,20 @@ h1, h3, h4, h5, p {
 .nav a.active {
   text-decoration: underline white;
   text-underline-offset: 0.5em;
+}
+
+.nav li {
+  display: inline-block;
+  margin: 0 10px;
+  vertical-align: top;
+}
+
+.nav li:last-child {
+  margin-right: 0;
+}
+
+/* Images */
+
+.thumbnail {
+  max-width: 100%;
 }
