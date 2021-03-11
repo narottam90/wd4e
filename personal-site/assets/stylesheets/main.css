@@ -74,7 +74,7 @@ p a {
 
 .primary-header a:hover,
 .primary-footer a:hover {
-  color: #648860
+  color: #648860;
 }
 
 /* 
@@ -307,4 +307,9 @@ h1, h3, h4, h5, p {
 
 .nav {
   text-align: right;
+}
+
+.nav a:hover {
+  text-decoration: underline white;
+  text-underline-offset: 0.5em;
 }
