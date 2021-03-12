@@ -333,8 +333,68 @@ h1, h3, h4, h5, p {
   margin-right: 0;
 }
 
-/* Images */
+/* 
+  ========================================
+  Thumbnails
+  ========================================
+*/
 
 .thumbnail {
   max-width: 100%;
+}
+
+/* 
+  ========================================
+  Tables
+  ========================================
+*/
+
+table {
+  width: 100%;
+  margin-bottom: 44px;
+}
+
+table:last-child {
+  margin-bottom: 0;
+}
+
+tr > td:first-child {
+  text-align: left;
+}
+
+tr > td:nth-child(1n + 2) {
+  text-align: center;
+}
+
+tr > td {
+  opacity: .8;
+  transition: opacity 0.8s;
+}
+
+tr:hover > td {
+  opacity: 1;
+}
+
+th, td {
+  padding-bottom: 22px;
+  vertical-align: top;
+}
+
+th {
+  text-align: center;
+  line-height: 44px;
+  color: #648880;
+  font-size: 24px;
+  font-family: "Crimson Text", serif;
+}
+
+td {
+  border-top: 1px solid #dfe2e5;
+  padding-top: 21px;
+  font-family: "Work Sans", serif;
+}
+
+td a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
 }
