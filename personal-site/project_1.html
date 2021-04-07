@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Randomized Dynamic Bar Chart</title>
+        <script type="text/javascript" src="d3/d3.js"></script>
+        <style>
+            .button {
+                display: block;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <button type="button" class="button">Update chart!</button>
+
+
+        <script type="text/javascript">
+            // Beautiful D3 code
+
+            var dataset = [ 11, 12, 15, 20, 18, 17, 16, 18, 23, 25,
+                                    5, 10, 13, 19, 21, 25, 22, 18, 15, 13 ];
+
+            // Variabalize width, height
+            var w = 600;
+            var h = 250;
+
+            // Create scales
+            var xScale = d3.scaleBand()
+                            .domain(d3.range(dataset.length))
+                            .rangeRound([ 0, w])
+                            .paddingInner(0.05);
+            
+            var yScale = d3.scaleLinear()
+                            .domain([ 0, d3.max(dataset)])
+                            .range([0, h]);
+
+            // Create SVG element
+            var svg = d3.select("body")
+                        .append("svg")
+                            .attr("width", w)
+                            .attr("height", h);
+
+            // Create rectangles
+            svg.selectAll("rect")
+                .data(dataset)
+                .enter()
+                .append("rect")
+                    .attr("x", function (d, i) {
+                        return xScale(i);
+                    })
+                    .attr("y", function (d) {
+                        return h - yScale(d);
+                    })
+                    .attr("width", xScale.bandwidth())
+                    .attr("height", function (d) {
+                        return yScale(d);
+                    })
+                    .attr("fill", function (d) {
+                            return "rgb(0, 0, " + d * 10 + ")";
+                    })
+
+            // Create text labels
+            svg.selectAll("text")
+                .data(dataset)
+                .enter()
+                .append("text")
+                .text(function (d) {
+                    return d;
+                })
+                    .attr("x", function (d, i) {
+                        return xScale(i) + xScale.bandwidth() / 2;
+                    })
+                    .attr("y", function (d) {
+                        return h - yScale(d) + 14;
+                    })
+                    .attr("text-anchor", "middle")
+                    .attr("font-family", "sans-serif")
+                    .attr("font-size", "11px")
+                    .attr("fill", "white");
+
+            // On click, update with new data
+            d3.select("button")
+                    .on("click", function() {
+                            
+                        // New values for dataset
+                        
+                        // Count the number of values in the dataset
+                        var numValues = dataset.length;
+
+                        // Initialize empty dataset
+                        dataset = []
+
+                        for ( var i = 0; i < numValues; i++) { // Loop numValue times
+                            var newNumber = Math.floor(Math.random() * 25) // Generate new number between 0 - 25
+                            dataset.push(newNumber);
+                        }
+
+                        // Update the rects
+                        svg.selectAll("rect")
+                            .data(dataset) 
+                            .transition()
+                            .delay(function (d, i) {
+                                return i / dataset.length * 1000;
+                            })
+                            .duration(500)
+                                .attr("y", function (d) {
+                                        return h - yScale(d);
+                                })
+                                .attr("height", function (d) {
+                                        return yScale(d);
+                                })
+                                .attr("fill", function (d) {
+                                        return "rgb(0, 0, " + Math.round(d * 10) + ")";
+                                })
+
+                        // Update the text labels
+                        svg.selectAll("text")
+                            .data(dataset)
+                            .text(function (d) {
+                                return d;
+                            })
+                            .transition()
+                            .delay(function (d, i) {
+                                return i / dataset.length * 1000;
+                            })
+                            .duration(500)
+                                .attr("x", function (d, i) {
+                                        return xScale(i) + xScale.bandwidth() / 2;
+                                })
+                                .attr("y", function (d) {
+                                        if (d <= 1) {
+                                            return h - yScale(d) - 4; // Position label above bar if d <= 1
+                                        } else {
+                                            return h - yScale(d) + 14;
+                                        }
+                                })
+                                .attr("fill", function (d) { // Fill black if d <= 1
+                                        if (d <= 1) {
+                                            return "black";
+                                        } else {
+                                            return "white";
+                                        }
+                                });
+
+                    })
+            
+        </script>
+    </body>
+</html>
