@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <title>Bundesliga Wages</title>
+    <link rel="stylesheet" href="assets/stylesheets/reset.css">
+    <link rel="stylesheet" href="assets/stylesheets/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Work+Sans:400,700" rel="stylesheet">
+    <script type="text/javascript" src="d3/d3.js"></script>
+
+    <style>
+        button {
+                display: inline-block;
+        }
+
+        .y path {
+                stroke: none;
+        }
+
+        #yearButtons {
+                position: absolute;
+                left: 300px ;
+        }
+
+        #tooltip {
+                position: absolute;
+                width: 100px;
+                height: auto;
+                padding: 10px;
+                background-color: white;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                border-radius: 10px;
+                -webkit-box-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+                -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+                box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+                pointer-events: none;
+            }
+
+        #tooltip.hidden {
+                display: none;
+            }
+
+        #tooltip p {
+                margin: 0;
+                font-family: sans-serif;
+                font-size: 12px;
+                line-height: 16px;
+            }
+    </style>
+
+    <body>
+        <header class="primary-header container group">
+                <h1 class="logo">
+                    <a href="index.html">Hi, <br>I'm Narottam</a>
+                </h1>
+                <h3 class="tagline">Chicago, IL</h3>
+                <nav class="nav primary-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li><!--
+                        --><li><a class="active" href="work.html">Portfolio</a></li><!--
+                        --><li><a href="reading.html">Reading List</a></li><!--
+                        --><li><a href="travel.html">Travel</a></li>
+                    </ul>
+                </nav>
+        </header>
+        
+
+        <section class="row-alt">
+                <div class="lead container"></div>
+                <h1>Bundesliga Annual Wages</h1>
+        
+        <section class="row">
+                <div class="container">
+
+                        <div id = "yearButtons">
+
+                                <button id="2016" type="button">
+                                        2016
+                                </button>
+                
+                                <button id="2017" type="button">
+                                        2017
+                                </button>
+                
+                                <button id="2018" type="button">
+                                        2018
+                                </button>
+                
+                                <button id="2019" type="button">
+                                        2019
+                                </button>
+                
+                        </div>
+                
+                        <div id="tooltip" class="hidden">
+                                <p><strong>Annual Salary</strong></p>
+                                <p>$<span id="value">100</span> million</p>
+                        </div>
+                        
+                        <script type="text/javascript">
+                
+                            //  Beautiful D3 code
+                
+                            // Variabalize height, width. margin, colorScheme
+                            var w = 800;
+                            var h = 500;
+                            var margin = ({ top: 50, right: 40, bottom: 50, left: 100});
+                            var colorScheme = ["#002051","#002153","#002255","#002356","#002358","#002459","#00255a","#00255c","#00265d","#00275e","#00275f","#002860","#002961","#002962","#002a63","#002b64","#012b65","#022c65","#032d66","#042d67","#052e67","#052f68","#063069","#073069","#08316a","#09326a","#0b326a","#0c336b","#0d346b","#0e346b","#0f356c","#10366c","#12376c","#13376d","#14386d","#15396d","#17396d","#183a6d","#193b6d","#1a3b6d","#1c3c6e","#1d3d6e","#1e3e6e","#203e6e","#213f6e","#23406e","#24406e","#25416e","#27426e","#28436e","#29436e","#2b446e","#2c456e","#2e456e","#2f466e","#30476e","#32486e","#33486e","#34496e","#364a6e","#374a6e","#394b6e","#3a4c6e","#3b4d6e","#3d4d6e","#3e4e6e","#3f4f6e","#414f6e","#42506e","#43516d","#44526d","#46526d","#47536d","#48546d","#4a546d","#4b556d","#4c566d","#4d576d","#4e576e","#50586e","#51596e","#52596e","#535a6e","#545b6e","#565c6e","#575c6e","#585d6e","#595e6e","#5a5e6e","#5b5f6e","#5c606e","#5d616e","#5e616e","#60626e","#61636f","#62646f","#63646f","#64656f","#65666f","#66666f","#67676f","#686870","#696970","#6a6970","#6b6a70","#6c6b70","#6d6c70","#6d6c71","#6e6d71","#6f6e71","#706f71","#716f71","#727071","#737172","#747172","#757272","#767372","#767472","#777473","#787573","#797673","#7a7773","#7b7774","#7b7874","#7c7974","#7d7a74","#7e7a74","#7f7b75","#807c75","#807d75","#817d75","#827e75","#837f76","#848076","#858076","#858176","#868276","#878376","#888477","#898477","#898577","#8a8677","#8b8777","#8c8777","#8d8877","#8e8978","#8e8a78","#8f8a78","#908b78","#918c78","#928d78","#938e78","#938e78","#948f78","#959078","#969178","#979278","#989278","#999378","#9a9478","#9b9578","#9b9678","#9c9678","#9d9778","#9e9878","#9f9978","#a09a78","#a19a78","#a29b78","#a39c78","#a49d78","#a59e77","#a69e77","#a79f77","#a8a077","#a9a177","#aaa276","#aba376","#aca376","#ada476","#aea575","#afa675","#b0a775","#b2a874","#b3a874","#b4a974","#b5aa73","#b6ab73","#b7ac72","#b8ad72","#baae72","#bbae71","#bcaf71","#bdb070","#beb170","#bfb26f","#c1b36f","#c2b46e","#c3b56d","#c4b56d","#c5b66c","#c7b76c","#c8b86b","#c9b96a","#caba6a","#ccbb69","#cdbc68","#cebc68","#cfbd67","#d1be66","#d2bf66","#d3c065","#d4c164","#d6c263","#d7c363","#d8c462","#d9c561","#dbc660","#dcc660","#ddc75f","#dec85e","#e0c95d","#e1ca5c","#e2cb5c","#e3cc5b","#e4cd5a","#e6ce59","#e7cf58","#e8d058","#e9d157","#ead256","#ebd355","#ecd454","#edd453","#eed553","#f0d652","#f1d751","#f1d850","#f2d950","#f3da4f","#f4db4e","#f5dc4d","#f6dd4d","#f7de4c","#f8df4b","#f8e04b","#f9e14a","#fae249","#fae349","#fbe448","#fbe548","#fce647","#fce746","#fde846","#fde946","#fdea45"];
+                            var dataset = []
+                
+                            // Convert CSV salary into numbers
+                            var rowConverter = function (d) {
+                                                        return {
+                                                            Rank: d.Rank,
+                                                            Team: d.Team,
+                                                            Salary: parseInt(d.Salary)
+                                                        };
+                            } 
+                
+                            // Load data
+                            d3.csv("data/bundesliga_2016.csv", rowConverter).then(function (data) {
+                                
+                
+                                // Copy data into global variable
+                                dataset = data;
+                
+                                // Ouput data for testing
+                                // console.log(dataset);
+                
+                                // Create scales
+                                var xScale = d3.scaleLinear()
+                                                .domain([0, d3.max(dataset, function (d) { return d.Salary; })])
+                                                .rangeRound([margin.left, w - margin.right]);
+                
+                
+                                var yScale = d3.scaleBand()
+                                                .domain(dataset.map( function (d) { return d.Team; }))
+                                                .rangeRound([margin.bottom, h - margin.top])
+                                                .paddingInner(0.1);
+                                
+                                var colorScale = d3.scaleQuantize()
+                                                .domain([
+                                                        d3.min(dataset, function (d) { return d.Salary; }),
+                                                        d3.max(dataset, function (d) { return d.Salary; })
+                                                        ])
+                                                .range(colorScheme);
+                
+                                // Define axes
+                                var xAxis = d3.axisBottom()
+                                                .scale(xScale)
+                                                .tickSizeOuter(0)
+                                                .ticks(5)
+                                                .tickFormat(d3.format("$.1s"));
+                
+                                var yAxis = d3.axisLeft()
+                                                .scale(yScale)
+                                                .tickSize(0);
+                                
+                                // Create SVG
+                                var svg = d3.select(".row")
+                                            .append("svg")
+                                            .attr("width", w)
+                                            .attr("height", h);
+                
+                                // Create rects
+                                svg.selectAll("rect")
+                                    .data(dataset)
+                                    .enter()
+                                    .append("rect")
+                                        .attr("transform", function (d, i) {
+                                                return "translate(" + margin.left + ", " + yScale(d.Team) + ")";
+                                        })
+                                        .attr("width", function (d) {
+                                                return xScale(d.Salary) - margin.left;
+                                        })
+                                        .attr("height", yScale.bandwidth())
+                                        .attr("fill", function (d) {
+                                                return colorScale(d.Salary);
+                                        })
+                                        .on("mouseover", function (event, d) {
+                                                d3.select(this)
+                                                        .attr("fill", "orange");
+                
+                                                // Get the bar's translate value from transform attribute
+                                                var translate = d3.select(this).attr("transform");
+                
+                                                console.log(translate);
+                
+                                                // Update the tooltip position and value
+                                                d3.select("#tooltip")
+                                                  .style("left", 650 + "px") 
+                                                  .style("top", 725 + "px")
+                                                  .select("#value")
+                                                  .text(function () {
+                                                          var salary = d.Salary / 1000000;
+                                                          return salary.toFixed(2);
+                                                  });
+                                                
+                                                
+                                                // Show the tooltip
+                                                d3.select("#tooltip").classed("hidden", false);
+                                                
+                                        })
+                                        .on("mouseout", function (d) {
+                                                d3.select(this)
+                                                        .transition()
+                                                        .duration(250)
+                                                                .attr("fill", function (d) {
+                                                                return colorScale(d.Salary)
+                                                        });
+                                                
+                                                // Hide the tooltip
+                                                d3.selectAll("#tooltip").classed("hidden", true);
+                                                        
+                                        });
+                
+                                // Create bar labels
+                                // svg.selectAll("text")
+                                //     .data(dataset)
+                                //     .enter()
+                                //     .append("text")
+                                //     .text(function (d) {
+                                //         return (d.Salary / 1000000).toFixed(2);
+                                //     })
+                                //         .attr("transform", function (d) {
+                                //             return "translate(" + margin.left + ", " + yScale(d.Team) + ")";
+                                //         })
+                                //         .attr("x", function (d) {
+                                //             return xScale(d.Salary) - margin.left - 5;
+                                //         })
+                                //         .attr("y", yScale.bandwidth() / 2 + 5)
+                                //         .attr("fill", "white")
+                                //         .attr("text-anchor", "end")
+                                //         .attr("font-family", "sans-serif")
+                                //         .attr("font-size", "11px");
+                
+                                // Create axes
+                                svg.append("g")
+                                        .attr("class", "x axis")
+                                        .attr("transform", "translate(0, " + (h - margin.bottom) + ")")
+                                        .call(xAxis);
+                
+                                svg.append("g")
+                                        .attr("class", "y axis")
+                                        .attr("transform", "translate(" + margin.left + ", 0)")
+                                        .call(yAxis);
+                                        
+                
+                                // Create x axis label
+                                svg.append("text")
+                                        .text("Annual Salary →")
+                                        .attr("x", w / 2)
+                                        .attr("y", h - Math.round(margin.bottom / 3))
+                                        .attr("text-anchor", "middle")
+                                        .attr("font-family", "sans-serif")
+                                        .attr("font-size", "11px");
+                
+                                // Create event listener
+                                d3.selectAll("button")
+                                        .on("click", function () {
+                
+                                                // See which button was clicked
+                                                var buttonId = d3.select(this).attr("id");
+                                                var fileName = "data/bundesliga_2016.csv";
+                                                
+                                                console.log(buttonId);
+                
+                                                if (buttonId == "2017") {
+                                                        fileName = "data/bundesliga_2017.csv";
+                                                } else if (buttonId == "2018") {
+                                                        fileName = "data/bundesliga_2018.csv";
+                                                } else if (buttonId == "2019") {
+                                                        fileName = "data/bundesliga_2019.csv";
+                                                }       
+                
+                                                d3.csv(fileName, rowConverter).then(function (data) {
+                                                        
+                                                        // Create empty dataset
+                                                        dataset = [];
+                
+                                                        // Copy data into dataset variable
+                                                        dataset = data; 
+                
+                                                        // Output dataset for testing
+                                                        // console.log(dataset);
+                
+                                                        // Update scales
+                                                        xScale.domain([0, d3.max(dataset, function (d) { return d.Salary; })]);
+                
+                                                        yScale.domain(dataset.map( function (d) { return d.Team; }));
+                
+                                                        colorScale.domain([
+                                                                d3.min(dataset, function (d) { return d.Salary; }),
+                                                                d3.max(dataset, function (d) { return d.Salary; })
+                                                        ]);
+                
+                                                        // Update bars
+                                                        svg.selectAll("rect")
+                                                           .data(dataset)
+                                                           .transition()
+                                                           .delay(function (d, i) {
+                                                                   return i * 50; 
+                                                           })
+                                                           .duration(1000)
+                                                                .attr("width", function (d) {
+                                                                        return xScale(d.Salary) - margin.left;
+                                                                })
+                                                                .attr("height", yScale.bandwidth())
+                                                                .attr("fill", function (d) {
+                                                                        return colorScale(d.Salary);
+                                                                        });     
+                                                                        
+                                                        // Update axes
+                                                        svg.select(".x.axis")
+                                                           .transition()
+                                                           .delay(function (d, i) {
+                                                                   return i * 50; 
+                                                           })
+                                                           .duration(1000)
+                                                           .call(xAxis);
+                
+                                                        svg.select(".y.axis")
+                                                           .transition()
+                                                           .delay(function (d, i) {
+                                                                   return i * 50; 
+                                                           })
+                                                           .duration(1000)
+                                                           .call(yAxis);
+                                                })
+                                        })
+                
+                            });
+                        </script>
+                </div>
+        </section>
+    </body>
+</html>
